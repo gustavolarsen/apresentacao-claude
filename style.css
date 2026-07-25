@@ -136,7 +136,7 @@
         overflow-x: hidden;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: safe center;
         gap: 0;
       }
       .slide.active {
@@ -1011,90 +1011,5 @@
         * {
           animation-duration: 0.01ms !important;
           transition-duration: 0.01ms !important;
-        }
-      }
-
-      /* ---------- print / PDF export ---------- */
-      /* A4 landscape @ 96dpi = 1122.5 x 793.7px; every slide is scaled
-         (via `zoom`, computed at export time) to fit this single page size. */
-      @media print {
-        @page {
-          size: 1122.5px 793.7px;
-          margin: 0;
-        }
-        html,
-        body {
-          background: var(--bg, #0b0b0e);
-          -webkit-print-color-adjust: exact;
-          print-color-adjust: exact;
-        }
-        * {
-          -webkit-print-color-adjust: exact !important;
-          print-color-adjust: exact !important;
-        }
-        .top-progress,
-        .topbar,
-        .navbar {
-          display: none !important;
-        }
-        .deck {
-          height: auto;
-          display: block;
-        }
-        .stage {
-          overflow: visible;
-          height: auto;
-        }
-        .slide {
-          position: relative;
-          inset: auto;
-          opacity: 1 !important;
-          transform: none !important;
-          pointer-events: auto;
-          overflow: hidden;
-          width: 1122.5px;
-          height: 793.7px;
-          padding: 24px 44px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          page-break-after: always;
-          break-after: page;
-          box-sizing: border-box;
-        }
-        .slide:last-child {
-          page-break-after: auto;
-          break-after: auto;
-        }
-        .slide-inner {
-          /* --print-zoom is set per-slide by the export script; defaults to 1 */
-          zoom: var(--print-zoom, 1);
-        }
-        .slide .reveal-item,
-        .slide .heading,
-        .slide .kicker,
-        .slide .lede,
-        .slide .title-badge,
-        .slide .title-slide h1,
-        .slide .title-slide h2,
-        .slide .title-slide .desc,
-        .slide .title-meta {
-          opacity: 1 !important;
-          transform: none !important;
-          animation: none !important;
-        }
-        .slide .caret {
-          display: none !important;
-        }
-        .eyebrow .cmd {
-          width: var(--chw) !important;
-        }
-        .file-row {
-          -webkit-print-color-adjust: exact;
-          print-color-adjust: exact;
-        }
-        * {
-          animation: none !important;
-          transition: none !important;
         }
       }
