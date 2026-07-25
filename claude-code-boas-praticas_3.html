@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Claude Code — Melhores Práticas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="top-progress">
+      <div class="top-progress-fill" id="topProgress"></div>
+    </div>
+
+    <div class="deck">
+      <header class="topbar">
+        <div class="brand">
+          <b>Claude Code</b><span class="sep">/</span>Boas práticas
+          <span class="full">de acordo com a Anthropic</span>
+        </div>
+        <div class="topbar-badge" id="chromeStep"><b>01</b> de 09</div>
+      </header>
+
+      <main class="stage" id="stage">
+        <!-- SLIDE 0 — TITLE -->
+        <section class="slide active" data-accent="gold">
+          <div class="slide-inner title-slide">
+            <div class="title-badge">
+              <span class="dot"></span>GUIA DE BOAS PRÁTICAS · TIME FRONTEND
+            </div>
+            <h1>Claude Code</h1>
+            <h2>
+              Dicas e padrões para aproveitar melhor a IA e fazer com que ele
+              crie com maior assertividade e qualidade.
+            </h2>
+            <p class="desc">
+              Diferente de um chatbot que responde perguntas, o Claude Code
+              pode ler seus arquivos, executar comandos, fazer alterações.
+            </p>
+            <div class="title-meta">
+              <div><b>code.claude.com</b>/docs/pt/best-practices</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 1 -->
+        <section class="slide" data-accent="gold">
+          <div class="slide-inner">
+            <div class="ghost-num">01</div>
+            <div class="eyebrow">
+              <span class="prompt-sym">$</span
+              ><span class="cmd" data-text="claude --plan-mode"></span
+              ><span class="caret"></span>
+            </div>
+            <div class="heading">
+              <span class="num">01</span>
+              <h1>Explore, planeje e codifique</h1>
+            </div>
+            <p class="tip">
+              <span class="mark">DICA</span
+              ><span
+                >Separe a pesquisa e o planejamento da execução — assim você
+                evita que Claude resolva o <b>problema errado</b>.
+            </p>
+            <div class="steps">
+              <div class="step-card reveal-item" style="--i: 1">
+                <span class="sn">1 · EXPLORAR</span>                
+                <p>Claude lê arquivos e responde perguntas sem alterar nada.</p>
+                <code class="snip"
+                  >leia src/hooks/useAuth.ts e entenda como tratamos sessão e login</code>
+              </div>
+              <div class="step-card reveal-item" style="--i: 2">
+                <span class="sn">2 · PLANEJAR</span>                
+                <p>
+                  Peça um plano de implementação detalhado.
+                </p>
+                <code class="snip"
+                  >/plan quero adicionar login com Google no NextAuth. quais componentes precisamos mudar?</code>
+              </div>
+              <div class="step-card reveal-item" style="--i: 3">
+                <span class="sn">3 · IMPLEMENTAR</span>
+                <p>
+                  Claude codifica e verifica o resultado contra o plano
+                  combinado.
+                </p>
+                <code class="snip"
+                  >implemente o fluxo do plano. escreva testes com Testing Library e rode a suíte</code
+                >
+              </div>
+            </div>
+            <p class="tip reveal-item" style="--i: 4">
+              <span class="mark">PULAR O PLANO</span
+              ><span
+                >Tarefa pequena e óbvia — corrigir um tipo, renomear uma prop?
+                Se você descreve o que muda em uma frase, <b>pule o plano</b> e peça
+                direto.</span
+              >
+            </p>
+          </div>
+        </section>
+
+        <!-- SLIDE 2 -->
+        <section class="slide" data-accent="gold">
+          <div class="slide-inner">
+            <div class="ghost-num">02</div>
+            <div class="eyebrow">
+              <span class="prompt-sym">$</span
+              ><span class="cmd" data-text="claude /init"></span
+              ><span class="caret"></span>
+            </div>
+            <div class="heading">
+              <span class="num">02</span>
+              <h1>Escreva um CLAUDE.md</h1>
+            </div>
+            <p class="lede">
+              CLAUDE.md é um arquivo especial que Claude lê no 
+              <b style="color: var(--text)">início de cada conversa</b>. 
+              Inclua comandos Bash, estilo de código e regras de fluxo de trabalho. 
+              Isso dá ao Claude contexto persistente que ele não pode inferir apenas do código. 
+            </p>
+
+            <p class="tip reveal-item" style="--i: 4">
+              <span class="mark">EXECUTE</span>
+              <span><code style="font-family: var(--mono); color: var(--accent)">/init</code>
+                para gerar um arquivo CLAUDE.md inicial baseado na estrutura do 
+                seu projeto atual, depois refine ao longo do tempo.</span>
+            </p>
+
+            <div class="cols-2">
+              <div class="colblock yes reveal-item" style="--i: 2">
+                <h4 style="color: var(--accent-2)">✓ INCLUA</h4>
+                <ul>
+                  <li>Comandos que Claude não consegue adivinhar</li>
+                  <li>Regras de estilo fora do padrão da linguagem</li>
+                  <li>Executor de testes preferido</li>
+                  <li>Armadilhas conhecidas do projeto</li>
+                </ul>
+              </div>
+              <div class="colblock no reveal-item" style="--i: 3">
+                <h4 style="color: var(--accent-3)">× EVITE</h4>
+                <ul>
+                  <li>O que Claude descobre só lendo o código</li>
+                  <li>Convenções padrão que Claude já conhece</li>
+                  <li>Documentação longa (link em vez disso)</li>
+                  <li>Informação que muda com frequência</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="code-panel reveal-item" style="--i: 1">
+              <div class="code-tab"><span class="fdot"></span>CLAUDE.md</div>
+              <pre>
+<span class="c-cmt"># Padrões de Código Front-end</span>
+- Sempre crie componentes funcionais com TypeScript.
+- Exporte os componentes como exportações nomeadas (Named Exports).
+- Mantenha os arquivos de estilo na mesma pasta do componente.
+
+<span class="c-cmt"># Workflow</span>
+- Rode o typecheck (tsc --noEmit) após alterações
+- Ao criar/alterar um hook, sempre gerar (ou atualizar) o teste
+- Prefira testes de componente isolados, não a suíte inteira
+
+- <span class="c-cmt"># Instruções adicionais</span>
+- Git workflow: @docs/git-instructions.md
+              </pre>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- SLIDE 3 -->
+        <section class="slide" data-accent="gold">
+          <div class="slide-inner">
+            <div class="ghost-num">03</div>
+            <div class="eyebrow">
+              <span class="prompt-sym">$</span
+              ><span class="cmd" data-text="claude --ask AskUserQuestion"></span
+              ><span class="caret"></span>
+            </div>
+            <div class="heading">
+              <span class="num">03</span>
+              <h1>Comunique-se e deixe Claude te entrevistar</h1>
+            </div>
+
+            <div class="cols-2" style="margin-top: 16px">
+              <div class="colblock reveal-item" style="--i: 1">
+                <h4 style="color: var(--text)">
+                  Trate Claude como um colega sênior
+                </h4>
+                <ul style="list-style: none">
+                  <li
+                    style="
+                      border-bottom: 1px solid var(--border-soft);
+                      padding: 9px 0;
+                      font-size: 20px;
+                      color: var(--text-dim);
+                    "
+                  >
+                    "Como funciona o gerenciamento de estado global aqui?"
+                  </li>
+                  <li
+                    style="
+                      border-bottom: 1px solid var(--border-soft);
+                      padding: 9px 0;
+                      font-size: 20px;
+                      color: var(--text-dim);
+                    "
+                  >
+                    "O que esse useEffect faz em Cart.tsx?"
+                  </li>
+              
+                  <li
+                    style="
+                      padding: 9px 0;
+                      font-size: 20px;
+                      color: var(--text-dim);
+                    "
+                  >
+                    Sem prompt especial — pergunte direto.
+                  </li>
+                </ul>
+              </div>
+              <div class="colblock reveal-item" style="--i: 2">
+                <h4 style="color: var(--text)">
+                  Para features maiores, inverta o jogo
+                </h4>
+                <p
+                  style="
+                    font-size: 20px;
+                    color: var(--text-dim);
+                    line-height: 1.6;
+                  "
+                >
+                  Comece com uma descrição mínima e deixe Claude entrevistar
+                  <em>você</em> sobre implementação, e peça ao Claude para 
+                  entrevistá-lo usando a ferramenta AskUserQuestion.
+                </p>
+              </div>
+            </div>
+
+            <div class="code-panel reveal-item" style="--i: 3">
+              <div class="code-tab">
+                <span class="fdot"></span>prompt · entrevista
+              </div>
+              <pre>
+Quero construir um DataTable component reutilizável
+com paginação e ordenação. Me entreviste em detalhes
+usando a ferramenta AskUserQuestion.
+
+Pergunte sobre implementação técnica, UI/UX, aprofunde-se nos pontos complexos 
+que eu possa não ter considerado. Continue até cobrirmos tudo —
+depois escreva um spec completo em SPEC.md.</pre>
+            </div>
+            <p class="tip reveal-item" style="--i: 4">
+              <span class="mark">DICA</span
+              ><span
+                >Com o SPEC.md pronto, abra uma <b>sessão nova e limpa</b> só
+                para implementar. O spec deve nomear arquivos, dizer o que fica
+                fora do escopo e terminar com um passo de verificação ponta a
+                ponta.</span
+              >
+            </p>
+          </div>
+        </section>
+
+        <!-- SLIDE 4 -->
+        <section class="slide" data-accent="gold">
+          <div class="slide-inner">
+            <div class="ghost-num">04</div>
+            <div class="eyebrow">
+              <span class="prompt-sym">$</span
+              ><span class="cmd" data-text="claude /clear"></span
+              ><span class="caret"></span>
+            </div>
+            <div class="heading">
+              <span class="num">04</span>
+              <h1>Gerencie o contexto agressivamente</h1>
+            </div>
+            <p class="lede">
+              A janela de contexto enche rápido — e o desempenho cai conforme
+              ela enche. É o recurso mais importante para administrar em
+              qualquer sessão.
+            </p>
+
+            <div class="gauge-wrap reveal-item" style="--i: 1">
+              <div class="gauge-label">
+                <span>janela de contexto</span
+                ><span class="ok">/clear reinicia o ciclo</span>
+              </div>
+              <div class="gauge-track"><div class="gauge-fill"></div></div>
+            </div>
+
+            <div class="chips">
+              <div class="chip reveal-item" style="--i: 2">
+                <b>/clear</b>Reinicia o contexto entre tarefas não relacionadas
+              </div>
+              <div class="chip reveal-item" style="--i: 3">
+                <b>auto-compaction</b>Resume sozinho perto do limite de tokens
+              </div>
+              <div class="chip reveal-item" style="--i: 4">
+                <b>/compact &lt;instruções&gt;</b>Você direciona o que preservar
+                ao compactar
+              </div>
+              <div class="chip reveal-item" style="--i: 5">
+                <b>Esc Esc · /rewind</b>Resume só um trecho, mantendo o resto
+                intacto
+              </div>
+              <div class="chip reveal-item" style="--i: 6">
+                <b>/btw</b>Pergunta rápida que nunca entra no histórico
+              </div>
+              <div class="chip reveal-item" style="--i: 7">
+                <b>subagents</b>Investigam em contexto separado e só devolvem o
+                resumo
+              </div>
+            </div>
+
+            <p class="tip reveal-item" style="--i: 8">
+              <span class="mark">SINAL</span
+              ><span
+                >Corrigiu o <b>mesmo problema duas vezes</b> na sessão? O
+                contexto está poluído com tentativas falhas — dê
+                <code style="font-family: var(--mono); color: var(--accent)"
+                  >/clear</code
+                >
+                e escreva um prompt melhor com o que aprendeu.</span
+              >
+            </p>
+          </div>
+        </section>
+
+        <!-- SLIDE 5 -->
+        <section class="slide" data-accent="gold">
+          <div class="slide-inner">
+            <div class="ghost-num">05</div>
+            <div class="eyebrow">
+              <span class="prompt-sym">$</span
+              ><span
+                class="cmd"
+                data-text="claude /skill component-conventions"
+              ></span
+              ><span class="caret"></span>
+            </div>
+            <div class="heading">
+              <span class="num">05</span>
+              <h1>Crie skills</h1>
+            </div>
+            <p class="lede">
+              Skills dão a Claude conhecimento de domínio e fluxos
+              reutilizáveis, carregados
+              <b style="color: var(--text)">sob demanda</b> — sem inchar o
+              CLAUDE.md a cada sessão. Basta um diretório com um
+              <code style="font-family: var(--mono); color: var(--accent)"
+                >SKILL.md</code
+              >.
+            </p>
+
+            <div class="cols-2">
+              <div class="code-panel reveal-item" style="--i: 1; margin: 0">
+                <div class="code-tab">
+                  <span class="fdot"></span
+                  >.claude/skills/component-conventions/SKILL.md
+                </div>
+                <pre><span class="c-cmt">---</span>
+<span class="c-key">name:</span> component-conventions
+<span class="c-key">description:</span> ativada quando o usuário pede: 
+  "crie um componente [Nome]"
+<span class="c-cmt">---</span>
+<span class="c-cmt">## Passo a Passo:</span>
+1. Crie a pasta <code style="font-family: var(--mono); color: var(--accent)">src/components/[Nome]</code>.
+2. Gere o arquivo <code style="font-family: var(--mono); color: var(--accent)">index.tsx</code> usando o template abaixo:
+   [Template de Código]
+3. Crie o arquivo de testes <code style="font-family: var(--mono); color: var(--accent)">[Nome].test.tsx</code></pre>
+              </div>
+              <div class="colblock reveal-item" style="--i: 2">
+                <h4 style="color: var(--text)">Como funciona</h4>
+                <ul style="list-style: none">
+                  <li
+                    style="
+                      border-bottom: 1px solid var(--border-soft);
+                      padding: 10px 0;
+                      font-size: 20px;
+                      color: var(--text-dim);
+                    "
+                  >
+                    Claude aplica a skill <b>automaticamente</b> quando é
+                    relevante
+                  </li>
+                  <li
+                    style="
+                      border-bottom: 1px solid var(--border-soft);
+                      padding: 10px 0;
+                      font-size: 20px;
+                      color: var(--text-dim);
+                    "
+                  >
+                    Ou você invoca direto com
+                    <span style="font-family: var(--mono); color: var(--accent)"
+                      >/nome-da-skill</span
+                    >
+                  </li>
+                  <li
+                    style="
+                      padding: 10px 0;
+                      font-size: 20px;
+                      color: var(--text-dim);
+                    "
+                  >
+                    Fluxos com efeitos colaterais: use
+                    <span
+                      style="font-family: var(--mono); color: var(--accent-3)"
+                      >disable-model-invocation: true</span
+                    >
+                    pra disparar só manualmente
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <p class="tip reveal-item" style="--i: 8">
+              <span class="mark">CUIDADO!</span>
+              <span>Instalar muitas skills e de fontes aleatórias pode gerar falhas de segurança, 
+                confundir a IA com informações conflitantes e aumentar o tempo de 
+                resposta e consequentemente aumentar os gastos de tokens.
+              </span>
+
+            </p>
+          </div>
+        </section>
+
+        <!-- SLIDE 6 -->
+        <section class="slide" data-accent="ok">
+      <div class="slide-inner">
+        <div class="ghost-num">06</div>
+        <div class="eyebrow"><span class="prompt-sym">$</span><span class="cmd" data-text="npm test && echo OK"></span><span class="caret"></span></div>
+        <div class="heading"><span class="num">06</span><h1>Dê a Claude uma forma de verificar o trabalho</h1></div>
+        <p class="tip"><span class="mark">POR QUÊ</span><span>Sem uma verificação executável, "<b>parece pronto</b>" é o único sinal — e você vira o loop de verificação manual, esperando notar cada erro.</span></p>
+
+        <table class="compare reveal-item" style="--i:1">
+          <colgroup><col class="col-strat"><col class="col-vago"><col class="col-claro"></colgroup>
+          <tr><th>Estratégia</th><th><span class="th-x">×</span> Vago</th><th><span class="th-ok">✓</span> Claro</th></tr>
+          <tr>
+            <td><span class="strat">Critérios claros</span></td>
+            <td class="vago">"implemente validação de e-mail"</td>
+            <td class="claro">"escreva o hook useEmailValidation com casos de teste: user@example.com = true, inválido = false. rode os testes ao final"</td>
+          </tr>
+          <tr>
+            <td><span class="strat">Verificação visual</span></td>
+            <td class="vago">"melhore o dashboard"</td>
+            <td class="claro">"[print] implemente este design no componente, tire print do resultado, compare com o Figma e corrija as diferenças"</td>
+          </tr>
+          <tr>
+            <td><span class="strat">Causa raiz</span></td>
+            <td class="vago">"o build do Vite está falhando"</td>
+            <td class="claro">"o build falha com este erro: [cole]. corrija a causa raiz, não suprima o erro, e confirme que o build passa"</td>
+          </tr>
+        </table>
+
+        <div class="ladder reveal-item" style="--i:2">
+          <div class="rung"><span class="rn">01</span><h4>Prompt único</h4><p>Peça pra rodar a verificação e iterar na mesma mensagem.</p></div>
+          <div class="rung"><span class="rn">02</span><h4>/goal</h4><p>Condição verificada de novo a cada turno da sessão inteira.</p></div>
+          <div class="rung"><span class="rn">03</span><h4>Stop hook</h4><p>Gate determinístico: um script bloqueia até a verificação passar.</p></div>
+          <div class="rung"><span class="rn">04</span><h4>Subagente revisor</h4><p>Segunda opinião com contexto fresco, tentando refutar o resultado.</p></div>
+        </div>
+
+        <p class="tip reveal-item" style="--i:3"><span class="mark">EVIDÊNCIA</span><span>Peça pra Claude <b>mostrar</b> em vez de afirmar sucesso: saída do teste, comando rodado, ou print do resultado.</span></p>
+      </div>
+        </section>
+
+        <!-- SLIDE 7 -->
+        <section class="slide" data-accent="warn">
+          <div class="slide-inner">
+            <div class="ghost-num">07</div>
+            <div class="eyebrow">
+              <span class="prompt-sym">$</span
+              ><span class="cmd" data-text="claude --diagnose-session"></span
+              ><span class="caret"></span>
+            </div>
+            <div class="heading">
+              <span class="num">07</span>
+              <h1>Evite padrões de falha comuns</h1>
+            </div>
+            <p class="lede">
+              Reconhecer esses erros cedo economiza tempo — e a maioria tem uma
+              correção simples.
+            </p>
+            <div class="fail-grid">
+              <div class="fail-card reveal-item" style="--i: 1">
+                <span class="fx">×</span>
+                <h3>Sessão pia-de-cozinha</h3>
+                <p>
+                  Você mistura tarefas soltas na mesma conversa. O contexto vira
+                  ruído.
+                </p>
+                <p class="fix">
+                  <b>Correção:</b> /clear entre tarefas não relacionadas.
+                </p>
+              </div>
+              <div class="fail-card reveal-item" style="--i: 2">
+                <span class="fx">×</span>
+                <h3>Corrigindo em loop</h3>
+                <p>
+                  Mesmo erro, mesma correção, de novo. O contexto está poluído
+                  com tentativas falhas.
+                </p>
+                <p class="fix">
+                  <b>Correção:</b> após 2 tentativas, /clear e um prompt melhor.
+                </p>
+              </div>
+              <div class="fail-card reveal-item" style="--i: 3">
+                <span class="fx">×</span>
+                <h3>CLAUDE.md inchado</h3>
+                <p>
+                  Regras demais e Claude ignora metade — a importante se perde
+                  no meio.
+                </p>
+                <p class="fix">
+                  <b>Correção:</b> poda impiedosa; vire hook o que for
+                  automático.
+                </p>
+              </div>
+              <div class="fail-card reveal-item" style="--i: 4">
+                <span class="fx">×</span>
+                <h3>Confiança sem verificação</h3>
+                <p>
+                  A implementação parece plausível mas não trata os casos
+                  extremos.
+                </p>
+                <p class="fix">
+                  <b>Correção:</b> sempre peça teste, script ou print. Sem
+                  verificação, não envie.
+                </p>
+              </div>
+              <div class="fail-card reveal-item" style="--i: 5">
+                <span class="fx">×</span>
+                <h3>Exploração infinita</h3>
+                <p>
+                  "Investiga isso" sem escopo — Claude lê centenas de arquivos e
+                  enche o contexto.
+                </p>
+                <p class="fix">
+                  <b>Correção:</b> escopo estreito, ou delegue a um subagent.
+                </p>
+              </div>
+              <div
+                class="fail-card reveal-item"
+                style="
+                  --i: 6;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  background: transparent;
+                  border-style: dashed;
+                "
+              >
+                <p
+                  style="
+                    font-size: 12px;
+                    color: var(--text-muted);
+                    text-align: center;
+                    line-height: 1.6;
+                  "
+                >
+                  A intuição pra evitar esses padrões vem da prática — preste
+                  atenção no que funciona.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 8 — CLOSING -->
+        <section class="slide" data-accent="gold">
+          <div class="slide-inner">
+            <div class="eyebrow"><span class="prompt-sym">$</span><span class="cmd" data-text="echo 'fim da sessão'"></span><span class="caret"></span></div>
+            <div class="heading"><h1>Desenvolva sua intuição</h1></div>
+            <p class="closing-quote">Esses padrões são pontos de partida, não regras fixas. Às vezes vale deixar o contexto acumular, pular o planejamento numa tarefa exploratória, ou usar um prompt vago de propósito pra ver como Claude interpreta o problema. Preste atenção no que funciona — a intuição vem da prática.</p>
+
+            <div class="file-list reveal-item" style="--i:1">
+              <a class="file-row" href="https://code.claude.com/docs/pt/how-claude-code-works" target="_blank" rel="noopener"><span class="ficon">▸</span>how-claude-code-works.md<span class="desc">o loop agentic por trás do Claude Code</span><span class="go">↗</span></a>
+              <a class="file-row" href="https://code.claude.com/docs/pt/features-overview" target="_blank" rel="noopener"><span class="ficon">▸</span>features-overview.md<span class="desc">skills, hooks, MCP, subagents e plugins</span><span class="go">↗</span></a>
+              <a class="file-row" href="https://code.claude.com/docs/pt/common-workflows" target="_blank" rel="noopener"><span class="ficon">▸</span>common-workflows.md<span class="desc">receitas prontas para depuração, testes e PRs</span><span class="go">↗</span></a>
+              <a class="file-row" href="https://code.claude.com/docs/pt/memory" target="_blank" rel="noopener"><span class="ficon">▸</span>memory.md<span class="desc">tudo sobre CLAUDE.md</span><span class="go">↗</span></a>
+              <a class="file-row" href="https://www.youtube.com/watch?v=iMso7WbhUr0" target="_blank" rel="noopener"><span class="ficon">▸</span>vídeo · conteúdo extra<span class="desc">aprofunde-se além desta apresentação</span><span class="go">↗</span></a>
+            </div>
+
+            <p class="thanks reveal-item" style="--i:2">$ obrigado — bons commits_</p>
+          </div>
+        </section>
+      </main>
+
+      <div class="navbar">
+        <button class="nav-btn" id="prevBtn" aria-label="Slide anterior">
+          ‹
+        </button>
+        <div class="dots" id="dots"></div>
+        <button class="nav-btn" id="nextBtn" aria-label="Próximo slide">
+          ›
+        </button>
+        <div class="counter" id="counter">01 / 09</div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
