@@ -135,19 +135,19 @@
               <div class="colblock yes reveal-item" style="--i: 2">
                 <h4 style="color: var(--accent-2)">✓ INCLUA</h4>
                 <ul>
-                  <li>Comandos que Claude não consegue adivinhar</li>
-                  <li>Regras de estilo fora do padrão da linguagem</li>
-                  <li>Executor de testes preferido</li>
-                  <li>Armadilhas conhecidas do projeto</li>
+                  <li>Stack e decisões fixas do projeto</li>
+                  <li>Convenções que valem para o projeto inteiro,</li>
+                  <li>Princípios de arquitetura, em uma linha</li>
+                  <li>Termos internos do time mapeados para arquivos/pastas</li>
                 </ul>
               </div>
               <div class="colblock no reveal-item" style="--i: 3">
                 <h4 style="color: var(--accent-3)">× EVITE</h4>
                 <ul>
-                  <li>O que Claude descobre só lendo o código</li>
-                  <li>Convenções padrão que Claude já conhece</li>
+                  <li>Regras detalhadas de um tarefas (crie um skill)</li>
+                  <li>Regras 100% mecânicas que um linter/formatter já garante</li>
+                  <li>Práticas auto-evidentes como “escreva código limpo”</li>
                   <li>Documentação longa (link em vez disso)</li>
-                  <li>Informação que muda com frequência</li>
                 </ul>
               </div>
             </div>
@@ -155,21 +155,14 @@
             <div class="code-panel reveal-item" style="--i: 1">
               <div class="code-tab"><span class="fdot"></span>CLAUDE.md</div>
               <pre>
-<span class="c-cmt"># Padrões de Código Front-end</span>
-- Sempre crie componentes funcionais com TypeScript.
+<span class="c-cmt"># Projeto</span>
+- Stack: React 18, Typescript, Material UI (MUI), Jest;
+
+<span class="c-cmt"># Padrões de Código</span>
 - Exporte os componentes como exportações nomeadas (Named Exports).
-- Mantenha os arquivos de estilo na mesma pasta do componente.
-
-<span class="c-cmt"># Workflow</span>
-- Rode o typecheck (tsc --noEmit) após alterações
-- Ao criar/alterar um hook, sempre gerar (ou atualizar) o teste
-- Prefira testes de componente isolados, não a suíte inteira
-
-- <span class="c-cmt"># Instruções adicionais</span>
-- Git workflow: @docs/git-instructions.md
+- Importe utilizando o alias `@/` em vez de caminhos relativos `../../../`.
               </pre>
             </div>
-
           </div>
         </section>
 
@@ -279,7 +272,7 @@ depois escreva um spec completo em SPEC.md.</pre>
             </div>
             <div class="heading">
               <span class="num">04</span>
-              <h1>Gerencie o contexto agressivamente</h1>
+              <h1>Gerencie sua sessão</h1>
             </div>
             <p class="lede">
               A janela de contexto enche rápido — e o desempenho cai conforme
@@ -435,38 +428,32 @@ depois escreva um spec completo em SPEC.md.</pre>
         <section class="slide" data-accent="ok">
       <div class="slide-inner">
         <div class="ghost-num">06</div>
-        <div class="eyebrow"><span class="prompt-sym">$</span><span class="cmd" data-text="npm test && echo OK"></span><span class="caret"></span></div>
-        <div class="heading"><span class="num">06</span><h1>Dê a Claude uma forma de verificar o trabalho</h1></div>
-        <p class="tip"><span class="mark">POR QUÊ</span><span>Sem uma verificação executável, "<b>parece pronto</b>" é o único sinal — e você vira o loop de verificação manual, esperando notar cada erro.</span></p>
+        <div class="eyebrow"><span class="prompt-sym">$</span><span class="cmd" data-text="cat error.log | claude"></span><span class="caret"></span></div>
+        <div class="heading"><span class="num">06</span><h1>Forneça um conteúdo rico</h1></div>
+        <p class="lede">Claude infere intenção, mas não lê sua mente. Quanto mais precisos os dados que você entrega, menos correções você vai precisar fazer depois.</p>
 
-        <table class="compare reveal-item" style="--i:1">
-          <colgroup><col class="col-strat"><col class="col-vago"><col class="col-claro"></colgroup>
-          <tr><th>Estratégia</th><th><span class="th-x">×</span> Vago</th><th><span class="th-ok">✓</span> Claro</th></tr>
-          <tr>
-            <td><span class="strat">Critérios claros</span></td>
-            <td class="vago">"implemente validação de e-mail"</td>
-            <td class="claro">"escreva o hook useEmailValidation com casos de teste: user@example.com = true, inválido = false. rode os testes ao final"</td>
-          </tr>
-          <tr>
-            <td><span class="strat">Verificação visual</span></td>
-            <td class="vago">"melhore o dashboard"</td>
-            <td class="claro">"[print] implemente este design no componente, tire print do resultado, compare com o Figma e corrija as diferenças"</td>
-          </tr>
-          <tr>
-            <td><span class="strat">Causa raiz</span></td>
-            <td class="vago">"o build do Vite está falhando"</td>
-            <td class="claro">"o build falha com este erro: [cole]. corrija a causa raiz, não suprima o erro, e confirme que o build passa"</td>
-          </tr>
-        </table>
-
-        <div class="ladder reveal-item" style="--i:2">
-          <div class="rung"><span class="rn">01</span><h4>Prompt único</h4><p>Peça pra rodar a verificação e iterar na mesma mensagem.</p></div>
-          <div class="rung"><span class="rn">02</span><h4>/goal</h4><p>Condição verificada de novo a cada turno da sessão inteira.</p></div>
-          <div class="rung"><span class="rn">03</span><h4>Stop hook</h4><p>Gate determinístico: um script bloqueia até a verificação passar.</p></div>
-          <div class="rung"><span class="rn">04</span><h4>Subagente revisor</h4><p>Segunda opinião com contexto fresco, tentando refutar o resultado.</p></div>
+        <div class="chips">
+          <div class="chip reveal-item" style="--i: 1">
+            <b>@arquivo</b>Referencie arquivos com @ em vez de descrever onde o código vive — Claude lê antes de responder
+          </div>
+          <div class="chip reveal-item" style="--i: 2">
+            <b>Imagens</b>Cole ou arraste capturas de tela e imagens direto no prompt
+          </div>
+          <div class="chip reveal-item" style="--i: 3">
+            <b>URLs</b>Aponte para documentação e referências de API — libere domínios recorrentes em /permissions
+          </div>
+          <div class="chip reveal-item" style="--i: 4">
+            <b>Pipe</b>Canalize dados direto, ex.: <code style="font-family: var(--mono); color: var(--accent)">cat error.log | claude</code>
+          </div>
+          <div class="chip reveal-item" style="--i: 5">
+            <b>Autonomia</b>Deixe Claude buscar o que precisa sozinho, via Bash, MCP ou leitura de arquivos
+          </div>
         </div>
 
-        <p class="tip reveal-item" style="--i:3"><span class="mark">EVIDÊNCIA</span><span>Peça pra Claude <b>mostrar</b> em vez de afirmar sucesso: saída do teste, comando rodado, ou print do resultado.</span></p>
+        <p class="tip reveal-item" style="--i: 6">
+          <span class="mark">POR QUÊ</span
+          ><span>Dados brutos removem ambiguidade. Uma captura de tela do design, o log de erro real ou o arquivo referenciado com <code style="font-family: var(--mono); color: var(--accent)">@</code> valem mais que qualquer descrição por escrito.</span>
+        </p>
       </div>
         </section>
 
@@ -576,15 +563,16 @@ depois escreva um spec completo em SPEC.md.</pre>
         <section class="slide" data-accent="gold">
           <div class="slide-inner">
             <div class="eyebrow"><span class="prompt-sym">$</span><span class="cmd" data-text="echo 'fim da sessão'"></span><span class="caret"></span></div>
-            <div class="heading"><h1>Desenvolva sua intuição</h1></div>
-            <p class="closing-quote">Esses padrões são pontos de partida, não regras fixas. Às vezes vale deixar o contexto acumular, pular o planejamento numa tarefa exploratória, ou usar um prompt vago de propósito pra ver como Claude interpreta o problema. Preste atenção no que funciona — a intuição vem da prática.</p>
+            <div class="heading"><h1>Ainda há muito a explorar</h1></div>
+            <p class="closing-quote">Essas dicas são só um ponto de partida. Fica o convite pra continuar explorando: os links abaixo são um bom próximo passo.
+              Foi usado o Claude como exemplo, mas elas também servem para outras IAs.
+            </p>
 
             <div class="file-list reveal-item" style="--i:1">
-              <a class="file-row" href="https://code.claude.com/docs/pt/how-claude-code-works" target="_blank" rel="noopener"><span class="ficon">▸</span>how-claude-code-works.md<span class="desc">o loop agentic por trás do Claude Code</span><span class="go">↗</span></a>
-              <a class="file-row" href="https://code.claude.com/docs/pt/features-overview" target="_blank" rel="noopener"><span class="ficon">▸</span>features-overview.md<span class="desc">skills, hooks, MCP, subagents e plugins</span><span class="go">↗</span></a>
-              <a class="file-row" href="https://code.claude.com/docs/pt/common-workflows" target="_blank" rel="noopener"><span class="ficon">▸</span>common-workflows.md<span class="desc">receitas prontas para depuração, testes e PRs</span><span class="go">↗</span></a>
-              <a class="file-row" href="https://code.claude.com/docs/pt/memory" target="_blank" rel="noopener"><span class="ficon">▸</span>memory.md<span class="desc">tudo sobre CLAUDE.md</span><span class="go">↗</span></a>
-              <a class="file-row" href="https://www.youtube.com/watch?v=iMso7WbhUr0" target="_blank" rel="noopener"><span class="ficon">▸</span>vídeo · conteúdo extra<span class="desc">aprofunde-se além desta apresentação</span><span class="go">↗</span></a>
+              <a class="file-row" href="https://code.claude.com/docs/pt/how-claude-code-works" target="_blank" rel="noopener"><span class="ficon">▸</span>Como o Claude funciona<span class="desc">o loop agentic por trás do Claude Code</span><span class="go">↗</span></a>
+              <a class="file-row" href="https://code.claude.com/docs/pt/common-workflows" target="_blank" rel="noopener"><span class="ficon">▸</span>Fluxos de trabalho comuns<span class="desc">guias passo-a-passo</span><span class="go">↗</span></a>
+              <a class="file-row" href="https://code.claude.com/docs/pt/prompt-library" target="_blank" rel="noopener"><span class="ficon">▸</span>Biblioteca de prompts<span class="desc">prompts prontos fornecidos pela Anthropic</span><span class="go">↗</span></a>
+              <a class="file-row" href="https://claude.com/resources/courses" target="_blank" rel="noopener"><span class="ficon">▸</span>Cursos Claude.com<span class="desc">aprofunde seus conhecimentos</span><span class="go">↗</span></a>
             </div>
 
             <p class="thanks reveal-item" style="--i:2">$ obrigado — bons commits_</p>
